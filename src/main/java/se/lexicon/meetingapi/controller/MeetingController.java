@@ -8,6 +8,9 @@ import se.lexicon.meetingapi.service.MeetingService;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/api/meetings")
+@CrossOrigin("*")
 public class MeetingController {
     private final MeetingService meetingService;
 
@@ -33,6 +36,8 @@ public class MeetingController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedDto);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteMeetingData(@PathVariable Long id) {
         meetingService.deleteMeetingData(id);
         return ResponseEntity.noContent().build();
