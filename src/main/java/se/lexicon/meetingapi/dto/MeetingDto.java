@@ -25,7 +25,7 @@ public record MeetingDto(
         String time,
 
         @NotBlank(message = "Level is required")
-        @Size(max = 255, message = "Location must not exceed 255 characters")
+        @Size(max = 50, message = "Level must not exceed 50 characters")
         String level,
 
         @NotBlank(message = "Action is required")

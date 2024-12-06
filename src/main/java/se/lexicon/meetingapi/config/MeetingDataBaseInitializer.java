@@ -1,5 +1,6 @@
 package se.lexicon.meetingapi.config;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 import se.lexicon.meetingapi.entity.Meeting;
 import se.lexicon.meetingapi.repository.MeetingRepository;
@@ -8,14 +9,16 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class DataBaseInitializer {
+public class MeetingDataBaseInitializer {
 
     private final MeetingRepository meetingRepository;
 
-    public DataBaseInitializer(MeetingRepository meetingRepository) {
+    public MeetingDataBaseInitializer(MeetingRepository meetingRepository) {
         this.meetingRepository = meetingRepository;
+
     }
 
+    @PostConstruct
     public void initializeDatabase() {
         List<Meeting> meetings = Arrays.asList(
                 new Meeting("Morning Meeting", "2024-12-25", "10:00 AM", "Team", "delete"),
