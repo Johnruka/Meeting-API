@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 public record MeetingDto(
 
-        Long id, @NotBlank(message = "Title is required")
+        Long id, @NotBlank(message = "Meeting is required")
         @Size(max = 100, message = "Title must not exceed 100 characters")
         String title,
 

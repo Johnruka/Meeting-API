@@ -22,27 +22,19 @@ public class Meeting {
     private String level;
     private String actions;
 
-    public Meeting(Long id, String title, String date, String time, String level, String actions) {
-        this.id = id;
-        this.actions = title;
-        this.level = date;
-        this.time = time;
-        this.date = level;
-        this.title = actions;
-    }
-
     public Meeting(String title, String date, String time, String level, String actions) {
-        this.actions = title;
-        this.level = date;
+        this.title = title;
+        this.date = date;
         this.time = time;
-        this.date = level;
-        this.title = actions;
+        this.level = level;
+        this.actions = actions;
     }
 
     public Meeting(String title, String date, String time, String level) {
-        this.level = title;
-        this.time = date;
-        this.date = time;
-        this.title = level;
+        this.title = title;
+        this.date = date;
+        this.time = time;
+        this.level = level;
     }
 }
+

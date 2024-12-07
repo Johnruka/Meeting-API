@@ -21,11 +21,11 @@ public class MeetingDataBaseInitializer {
     @PostConstruct
     public void initializeDatabase() {
         List<Meeting> meetings = Arrays.asList(
-                new Meeting("Morning Meeting", "2024-12-25", "10:00 AM", "Team", "delete"),
-                new Meeting("Lecture", "2024-12-26", "2:00 PM", "company", "delete"),
-                new Meeting("Weekly Meeting", "2024-12-28", "1:00 PM", "Team", "delete"),
-                new Meeting("One-on-one", "2024-12-30", "11:00 AM", "company", "delete"),
-                new Meeting("Monthly Meeting", "2024-12-16", "10:00 AM", "Team", "delete")
+                new Meeting("Morning Meeting", "2024-12-25", "10:00 AM", "Team"),
+                new Meeting("Lecture", "2024-12-26", "2:00 PM", "company"),
+                new Meeting("Weekly Meeting", "2024-12-28", "1:00 PM", "Team"),
+                new Meeting("One-on-one", "2024-12-30", "11:00 AM", "company"),
+                new Meeting("Monthly Meeting", "2024-12-16", "10:00 AM", "Team")
         );
 
         // Save all meetings to the database
