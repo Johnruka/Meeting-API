@@ -28,10 +28,15 @@ public record MeetingDto(
         @Size(max = 50, message = "Level must not exceed 50 characters")
         String level,
 
-        @NotBlank(message = "Action is required")
+        @NotBlank(message = "Location is required")
+        @Size(max = 50, message = "Level must not exceed 50 characters")
+        String location,
+
+        @NotBlank(message = "Status is required")
         @Pattern(
-                regexp = "delete"
+                regexp = "pending|accepted|declined",
+                message = "Status must be 'pending', 'accepted', or 'declined'"
         )
-        String actions
+        String status
 ) {
 }

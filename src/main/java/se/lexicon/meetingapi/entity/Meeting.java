@@ -20,21 +20,26 @@ public class Meeting {
     private String date;
     private String time;
     private String level;
-    private String actions;
+    private String location;
+    private String status;
 
-    public Meeting(String title, String date, String time, String level, String actions) {
+    public Meeting(String title, String date, String time, String level, String location, String status) {
         this.title = title;
         this.date = date;
         this.time = time;
         this.level = level;
-        this.actions = actions;
+        this.location = location;
+        this.status = status;
     }
 
-    public Meeting(String title, String date, String time, String level) {
+    public Meeting(Long id, String title, String date, String time, String level, String location, String status) {
+        this.id = id;
         this.title = title;
         this.date = date;
         this.time = time;
         this.level = level;
+        this.location = location;
+        this.status = status;
     }
 }
 

@@ -48,10 +48,10 @@ public class MeetingController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> updateMeeting(@PathVariable Long id, @RequestParam @NotBlank(message = "deleted")
+    public ResponseEntity<Void> updateMeeting(@PathVariable Long id, @RequestParam @NotBlank(message = "Status is required")
     @Pattern(
-            regexp = "delete",
-            message = "deleted'"
+            regexp = "pending|accepted|declined",
+            message = "Status must be 'pending', 'accepted', or 'declined'"
     )
     String status) {
         System.out.println("id = " + id);

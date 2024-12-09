@@ -25,7 +25,8 @@ public class MeetingService {
                 meeting.getDate(),
                 meeting.getTime(),
                 meeting.getLevel(),
-                meeting.getActions()
+                meeting.getLocation(),
+                meeting.getStatus()
 
         );
     }
@@ -38,7 +39,8 @@ public class MeetingService {
         meeting.setDate(dto.date());
         meeting.setTime(dto.time());
         meeting.setLevel(dto.level());
-        meeting.setActions(dto.actions());
+        meeting.setLocation(dto.location());
+        meeting.setStatus(dto.status());
         return meeting;
     }
 
@@ -77,7 +79,8 @@ public class MeetingService {
         meeting.setDate(meeting.getDate());
         meeting.setTime(meeting.getTime());
         meeting.setLevel(meeting.getLevel());
-        meeting.setActions(meeting.getActions());
+        meeting.setLocation(meeting.getLocation());
+        meeting.setStatus(meeting.getStatus());
         meetingRepository.save(meeting);
     }
 
