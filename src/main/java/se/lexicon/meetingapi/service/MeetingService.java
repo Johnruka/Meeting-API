@@ -80,7 +80,7 @@ public class MeetingService {
         meeting.setTime(meeting.getTime());
         meeting.setLevel(meeting.getLevel());
         meeting.setLocation(meeting.getLocation());
-        meeting.setStatus(meeting.getStatus());
+        meeting.setStatus(status);
         meetingRepository.save(meeting);
     }
 
