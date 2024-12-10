@@ -58,20 +58,20 @@ public class MeetingService {
         return toDto(meeting);
     }
 
-    public MeetingDto saveMeetingData(MeetingDto dto) {
+    public MeetingDto saveMeeting(MeetingDto dto) {
         Meeting meeting = toEntity(dto);
         Meeting savedMeeting = meetingRepository.save(meeting);
         return toDto(savedMeeting);
     }
 
-    public void deleteMeetingData(Long id) {
+    public void deleteMeeting(Long id) {
         if (!meetingRepository.existsById(id)) {
             throw new RuntimeException("Invitation not found with ID: " + id);
         }
         meetingRepository.deleteById(id);
     }
 
-    public void updateMeetingData(Long id, String status) {
+    public void updateMeeting(Long id, String status) {
         Meeting meeting = meetingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Meeting not found with ID: " + id));
 
