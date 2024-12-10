@@ -21,14 +21,17 @@ public class User {
     private String lastName;
     private String email;
     private String role;
+    private String status;
 
-    public User(String firstName, String lastName, String email, String role) {
+    public User(String firstName, String lastName, String email, String role, String status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.role = role;
+        this.status = status;
     }
-
 }
+
+
 
 

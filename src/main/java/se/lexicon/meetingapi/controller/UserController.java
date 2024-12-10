@@ -50,8 +50,8 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestParam @NotBlank(message = "User is required")
     @Pattern(
-            regexp = "pending|accepted|declined",
-            message = "Status must be 'pending', 'accepted', or 'declined'"
+            regexp = "pending|registered |rejected",
+            message = "Status must be 'pending', 'registered', 'rejected"
     )
     String status) {
         System.out.println("id = " + id);

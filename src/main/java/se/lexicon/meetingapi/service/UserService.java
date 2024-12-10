@@ -24,7 +24,8 @@ public class UserService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getRole()
+                user.getRole(),
+                user.getStatus()
 
         );
     }
@@ -37,6 +38,7 @@ public class UserService {
         user.setLastName(dto.lastName());
         user.setEmail(dto.email());
         user.setRole(dto.role());
+        user.setStatus(dto.status());
         return user;
     }
 
@@ -73,6 +75,17 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
 
+    }
+
+    public void updateMeeting(Long id, String status) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+
+        user.setFirstName(user.getFirstName());
+        user.setLastName(user.getLastName());
+        user.setEmail(user.getEmail());
+        user.setRole(user.getRole());
+        user.setStatus(user.getStatus());
     }
 }
 
