@@ -51,7 +51,7 @@ public class UserController {
     public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestParam @NotBlank(message = "User is required")
     @Pattern(
             regexp = "pending|registered |rejected",
-            message = "Status must be 'pending', 'registered', 'rejected"
+            message = "Status must be 'pending', 'registered', 'rejected'"
     )
     String status) {
         System.out.println("id = " + id);

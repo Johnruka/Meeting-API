@@ -20,10 +20,10 @@ public class UserDataBaseInitializer {
     @PostConstruct
     public void initializeDatabase() {
        List<User> users = Arrays.asList(
-               new User("John", "Land", "john@test.com","Admin", "registered"),
+               new User("John", "Land", "john@test.com","Admin", "pending"),
                new User("David", "Moe", "david@test.com","Guest", "pending"),
                new User("Mats", "Mars", "mats@test.com", "Guest", "pending"),
-               new User("Carlsson", "Karl", "carlsson@test.com", "Guest", "registered")
+               new User("Carlsson", "Karl", "carlsson@test.com", "Guest", "pending")
 
 
         );

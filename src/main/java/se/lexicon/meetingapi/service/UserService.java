@@ -70,14 +70,10 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+
+
     public void updateUser(Long id, String status) {
         this.status = status;
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
-
-    }
-
-    public void updateMeeting(Long id, String status) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
 
@@ -86,6 +82,7 @@ public class UserService {
         user.setEmail(user.getEmail());
         user.setRole(user.getRole());
         user.setStatus(user.getStatus());
+        userRepository.save(user);
     }
 }
 

@@ -1,5 +1,7 @@
 package se.lexicon.meetingapi.controller;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +46,18 @@ public class MeetingController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> updateMeeting(@PathVariable Long id, @RequestParam @NotBlank(message = "Status is required")
+    @Pattern(
+            regexp = "pending|accepted|declined",
+            message = "Status must be 'pending', 'accepted', or 'declined'"
+    )
+    String status) {
+        System.out.println("id = " + id);
+        System.out.println("status = " + status);
+        meetingService.updateMeeting(id, status);
+        return ResponseEntity.noContent().build();
 
     }
+}

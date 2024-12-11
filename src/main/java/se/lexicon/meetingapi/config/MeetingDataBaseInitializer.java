@@ -25,7 +25,7 @@ public class MeetingDataBaseInitializer {
                 new Meeting("Lecture", "2024-12-26", "2:00 PM", "company" , "Classroom", "pending"),
                 new Meeting("Weekly Meeting", "2024-12-28", "1:00 PM", "Team", "Zoom", "pending"),
                 new Meeting("Evening Meeting", "2024-12-30", "11:00 AM", "company", "Meeting room", "pending"),
-                new Meeting("Monthly Meeting", "2024-12-16", "10:00 AM", "Team", "Office 2", "accepted")
+                new Meeting("Monthly Meeting", "2024-12-16", "10:00 AM", "Team", "Office 2", "pending")
         );
 
         // Save all meetings to the database
