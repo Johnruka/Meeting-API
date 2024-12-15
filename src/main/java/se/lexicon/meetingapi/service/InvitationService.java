@@ -23,7 +23,8 @@ public class InvitationService {
                 invitation.getId(),
                 invitation.getTitle(),
                 invitation.getDate(),
-                invitation.getTime(),
+                invitation.getStartTime(),
+                invitation.getEndTime(),
                 invitation.getLocation(),
                 invitation.getStatus()
         );
@@ -35,7 +36,8 @@ public class InvitationService {
         invitation.setId(dto.id());
         invitation.setTitle(dto.title());
         invitation.setDate(dto.date());
-        invitation.setTime(dto.time());
+        invitation.setStartTime(dto.startTime());
+        invitation.setEndTime(dto.endTime());
         invitation.setLocation(dto.location());
         invitation.setStatus(dto.status());
         return invitation;
@@ -66,7 +68,8 @@ public class InvitationService {
 
         invitation.setTitle(invitation.getTitle());
         invitation.setDate(invitation.getDate());
-        invitation.setTime(invitation.getTime());
+        invitation.setStartTime(invitation.getStartTime());
+        invitation.setEndTime(invitation.getEndTime());
         invitation.setLocation(invitation.getLocation());
         invitation.setStatus(status);
         invitationRepository.save(invitation);
