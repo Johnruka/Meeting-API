@@ -17,7 +17,7 @@ public class LabelDataBaseInitializer {
 
     @PostConstruct
     public void initializeDatabase() {
-        Label label1 = new Label("title", "Date", "startTime", "endTime", "Location", "level", "participants", "description");
+        Label label1 = new Label("", "", "", "", "", "", "", "");
 
         labelRepository.save(label1);
         System.out.println("Database initialized with meeting data.");
