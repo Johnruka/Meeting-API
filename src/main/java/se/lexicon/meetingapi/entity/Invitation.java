@@ -20,15 +20,18 @@ public class Invitation {
 
     private String title;
     private String date;
-    private String time;
+    private String startTime;
+    private String endTime;
     private String location;
     private String status;
 
-    public Invitation(String title, String date, String time, String location, String status) {
+    public Invitation(String title, String date, String startTime, String endTime, String location, String status) {
         this.title = title;
         this.date = date;
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.location = location;
         this.status = status;
     }
 }
+
