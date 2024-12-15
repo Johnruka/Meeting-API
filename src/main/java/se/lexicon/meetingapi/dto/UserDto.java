@@ -21,14 +21,11 @@ String lastName,
 String email,
 
 @NotBlank(message = "role is required")
-@Size(max = 50, message = "role must not exceed 50 characters")
-String role,
-
-@NotBlank(message = "Status is required")
 @Pattern(
-        regexp = "pending|accepted|declined",
-        message = "Status must be 'pending', 'accepted', or 'declined'"
-)
-String status
+        regexp = "admin|user|guest",
+        message = "role must be 'admin','user', 'guest'")
+String role
+
+
         ) {
 }

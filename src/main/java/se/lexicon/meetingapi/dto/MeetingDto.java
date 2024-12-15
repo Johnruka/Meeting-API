@@ -22,21 +22,28 @@ public record MeetingDto(
                 regexp = "(?:[01]\\d|2[0-3]):[0-5]\\d (?:AM|PM)",
                 message = "Time must be in the format HH:MM AM/PM"
         )
-        String time,
+        String startTime,
 
-        @NotBlank(message = "Level is required")
-        @Size(max = 50, message = "Level must not exceed 50 characters")
-        String level,
+        @NotBlank(message = "Time is required")
+        @Pattern(
+                regexp = "(?:[01]\\d|2[0-3]):[0-5]\\d (?:AM|PM)",
+                message = "Time must be in the format HH:MM AM/PM"
+        )
+        String endTime,
 
-        @NotBlank(message = "Location is required")
-        @Size(max = 50, message = "Level must not exceed 50 characters")
+        @Size(max = 50, message = "Location must not exceed 100 characters")
         String location,
 
-        @NotBlank(message = "Status is required")
+
+           @NotBlank(message = "Level is required")
         @Pattern(
-                regexp = "pending|accepted|declined",
-                message = "Status must be 'pending', 'accepted', or 'declined'"
+                regexp = "team|company|department",
+                message = "Level must be 'team','company', 'department'"
         )
-        String status
+                String level
+
+
+
+
 ) {
 }

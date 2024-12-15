@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private UserRepository userRepository;
-    private String status;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -24,8 +23,8 @@ public class UserService {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getRole(),
-                user.getStatus()
+                user.getRole()
+
 
         );
     }
@@ -38,7 +37,6 @@ public class UserService {
         user.setLastName(dto.lastName());
         user.setEmail(dto.email());
         user.setRole(dto.role());
-        user.setStatus(dto.status());
         return user;
     }
 
@@ -73,7 +71,6 @@ public class UserService {
 
 
     public void updateUser(Long id, String status) {
-        this.status = status;
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
 
@@ -81,7 +78,6 @@ public class UserService {
         user.setLastName(user.getLastName());
         user.setEmail(user.getEmail());
         user.setRole(user.getRole());
-        user.setStatus(user.getStatus());
         userRepository.save(user);
     }
 }

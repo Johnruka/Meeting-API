@@ -14,16 +14,24 @@ import java.util.List;
 @RequestMapping("/api/meetings")
 @CrossOrigin("*")
 public class MeetingController {
+
     private final MeetingService meetingService;
+
+
+
 
     public MeetingController(MeetingService meetingService) {
         this.meetingService = meetingService;
+
+
     }
+
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<MeetingDto> getAllMeetings() {
         return meetingService.getAllMeetings();
+
     }
 
     @GetMapping("/{id}")
@@ -48,15 +56,15 @@ public class MeetingController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> updateMeeting(@PathVariable Long id, @RequestParam @NotBlank(message = "Status is required")
+    public ResponseEntity<Void> updateMeeting(@PathVariable Long id, @NotBlank(message = "Level is required")
     @Pattern(
-            regexp = "pending|accepted|declined",
-            message = "Status must be 'pending', 'accepted', or 'declined'"
+            regexp = "team|department",
+            message = "Level must be 'team', 'department'"
     )
-    String status) {
+    String level) {
         System.out.println("id = " + id);
-        System.out.println("status = " + status);
-        meetingService.updateMeeting(id, status);
+        System.out.println("level = " + level);
+        meetingService.updateMeeting(id, level);
         return ResponseEntity.noContent().build();
 
     }

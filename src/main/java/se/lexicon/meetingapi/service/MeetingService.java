@@ -1,19 +1,27 @@
 package se.lexicon.meetingapi.service;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.stereotype.Service;
 import se.lexicon.meetingapi.dto.MeetingDto;
 import se.lexicon.meetingapi.entity.Meeting;
+import se.lexicon.meetingapi.repository.LabelRepository;
 import se.lexicon.meetingapi.repository.MeetingRepository;
 
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
 
 @Service
 public class MeetingService {
     private final MeetingRepository meetingRepository;
 
-    public MeetingService(MeetingRepository meetingRepository) {
+
+
+    public MeetingService(MeetingRepository meetingRepository, LabelRepository labelRepository) {
         this.meetingRepository = meetingRepository;
+
 
     }
 
@@ -23,11 +31,10 @@ public class MeetingService {
                 meeting.getId(),
                 meeting.getTitle(),
                 meeting.getDate(),
-                meeting.getTime(),
-                meeting.getLevel(),
+                meeting.getStartTime(),
+                meeting.getEndTime(),
                 meeting.getLocation(),
-                meeting.getStatus()
-
+                meeting.getLevel()
         );
     }
 
@@ -37,10 +44,11 @@ public class MeetingService {
         meeting.setId(dto.id());
         meeting.setTitle(dto.title());
         meeting.setDate(dto.date());
-        meeting.setTime(dto.time());
-        meeting.setLevel(dto.level());
+        meeting.setStartTime(dto.startTime());
+        meeting.setEndTime(dto.endTime());
         meeting.setLocation(dto.location());
-        meeting.setStatus(dto.status());
+        meeting.setLevel(dto.level());
+
         return meeting;
     }
 
@@ -50,11 +58,16 @@ public class MeetingService {
                 .map(this::toDto)
                 .collect(Collectors.toList());
 
+
     }
+
+    private void collect(Collector<Object, ?, List<Object>> list) {
+    }
+
 
     public MeetingDto getMeetingById(Long id) {
         Meeting meeting = meetingRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Invitation not found with ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Meeting not found with ID: " + id));
         return toDto(meeting);
     }
 
@@ -66,21 +79,24 @@ public class MeetingService {
 
     public void deleteMeeting(Long id) {
         if (!meetingRepository.existsById(id)) {
-            throw new RuntimeException("Invitation not found with ID: " + id);
+            throw new RuntimeException("Meeting not found with ID: " + id);
         }
         meetingRepository.deleteById(id);
     }
 
-    public void updateMeeting(Long id, String status) {
+    public void updateMeeting(Long id, @NotBlank(message = "Level is required") @Pattern(
+            regexp = "team|department",
+            message = "Level must be 'team', 'department'"
+    ) String level) {
         Meeting meeting = meetingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Meeting not found with ID: " + id));
 
         meeting.setTitle(meeting.getTitle());
         meeting.setDate(meeting.getDate());
-        meeting.setTime(meeting.getTime());
+        meeting.setStartTime(meeting.getStartTime());
+        meeting.setEndTime(meeting.getEndTime());
         meeting.setLevel(meeting.getLevel());
         meeting.setLocation(meeting.getLocation());
-        meeting.setStatus(status);
         meetingRepository.save(meeting);
     }
 
