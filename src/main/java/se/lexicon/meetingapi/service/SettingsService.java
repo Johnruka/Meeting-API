@@ -2,6 +2,7 @@ package se.lexicon.meetingapi.service;
 
 import org.springframework.stereotype.Service;
 import se.lexicon.meetingapi.dto.SettingsDto;
+import se.lexicon.meetingapi.dto.UserDto;
 import se.lexicon.meetingapi.entity.Settings;
 import se.lexicon.meetingapi.repository.SettingsRepository;
 
