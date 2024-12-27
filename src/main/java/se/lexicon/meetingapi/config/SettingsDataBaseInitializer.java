@@ -14,7 +14,7 @@ public class SettingsDataBaseInitializer {
     }
 
     public void initializeDatabase() {
-        Settings settings1 = new Settings("", "","");
+        Settings settings1 = new Settings("", "","","", "");
 
         settingsRepository.save(settings1);
         System.out.println("Database initialized with meeting data.");

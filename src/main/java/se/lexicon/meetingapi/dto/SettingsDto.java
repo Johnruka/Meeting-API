@@ -26,7 +26,21 @@ public record SettingsDto(
                          regexp = "sunday|monday",
                          message = "startOfTheWeek must be 'sunday','monday'"
                  )
-                         String startOfTheWeek
+                         String startOfTheWeek,
+
+        @NotBlank(message = "Language is required")
+        @Pattern(
+                regexp = "English|Spanish|French|German|Chinese|Japanese",
+                message = "Language must be 'English', 'Spanish', 'French', 'German', 'Chinese', 'Japanese'"
+        )
+                String language,
+
+         @NotBlank(message = "timeFormat is required")
+        @Pattern(
+                regexp = "12h|24h",
+                message = "timeFormat must be '12h','24h'"
+        )
+                String timeFormat
 
 
 ) {

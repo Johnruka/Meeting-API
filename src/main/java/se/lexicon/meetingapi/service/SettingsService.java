@@ -2,7 +2,6 @@ package se.lexicon.meetingapi.service;
 
 import org.springframework.stereotype.Service;
 import se.lexicon.meetingapi.dto.SettingsDto;
-import se.lexicon.meetingapi.dto.UserDto;
 import se.lexicon.meetingapi.entity.Settings;
 import se.lexicon.meetingapi.repository.SettingsRepository;
 
@@ -21,7 +20,9 @@ public class SettingsService {
                 settings.getId(),
                 settings.getDefaultView(),
                 settings.getTimeZone(),
-                settings.getStartOfTheWeek()
+                settings.getStartOfTheWeek(),
+                settings.getLanguage(),
+                settings.getTimeFormat()
         );
 
     }
@@ -33,6 +34,8 @@ public class SettingsService {
         settings.setDefaultView(dto.defaultView());
         settings.setTimeZone(dto.timeZone());
         settings.setStartOfTheWeek(dto.startOfTheWeek());
+        settings.setLanguage(dto.language());
+        settings.setTimeFormat(dto.timeFormat());
         return settings;
     }
 

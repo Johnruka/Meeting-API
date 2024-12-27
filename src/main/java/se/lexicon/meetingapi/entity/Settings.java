@@ -24,9 +24,16 @@ public class Settings {
 
     private String StartOfTheWeek;
 
-    public Settings(String defaultView, String timeZone, String startOfTheWeek) {
+    private String language;
+
+    private String timeFormat;
+
+    public Settings(String defaultView, String timeZone, String startOfTheWeek, String language, String timeFormat) {
         this.defaultView = defaultView;
         TimeZone = timeZone;
         StartOfTheWeek = startOfTheWeek;
+        this.language = language;
+        this.timeFormat = timeFormat;
     }
 }
+
