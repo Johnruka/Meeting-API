@@ -22,12 +22,12 @@ public class AnalyticsDataDatabaseInitializer {
     public void initializeDatabase() {
 
         List<AnalyticsData> analyticsDataList = Arrays.asList(
-                new AnalyticsData("Users", 150.0, LocalDate.now().minusDays(1)),
-                new AnalyticsData("Page Views", 2000.0, LocalDate.now().minusDays(2)),
-                new AnalyticsData("Conversion Rate", 5.0, LocalDate.now().minusDays(3))
+                new AnalyticsData("Users", 150.0, LocalDate.now().minusDays(0)),
+                new AnalyticsData("Page Views", 2000.0, LocalDate.now().minusDays(0)),
+                new AnalyticsData("Conversion Rate", 5.0, LocalDate.now().minusDays(0))
         );
 
-
+        // Save the list of sample data into the repository
         analyticsDataRepository.saveAll(analyticsDataList);
 
         System.out.println("Database initialized with sample data.");
