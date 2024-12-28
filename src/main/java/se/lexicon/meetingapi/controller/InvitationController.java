@@ -2,23 +2,30 @@ package se.lexicon.meetingapi.controller;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.lexicon.meetingapi.dto.InvitationDto;
+import se.lexicon.meetingapi.repository.InvitationRepository;
 import se.lexicon.meetingapi.service.InvitationService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/invitations")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class InvitationController {
 
-    private final InvitationService invitationService;
+    private static final Logger logger = LoggerFactory.getLogger(InvitationController.class);
 
-    public InvitationController(InvitationService invitationService) {
+    private final InvitationService invitationService;
+    private final InvitationRepository invitationRepository;
+
+    public InvitationController(InvitationService invitationService, InvitationRepository invitationRepository) {
         this.invitationService = invitationService;
+        this.invitationRepository = invitationRepository;
     }
 
     @GetMapping
@@ -27,10 +34,13 @@ public class InvitationController {
         return invitationService.getAllInvitations();
     }
 
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public InvitationDto getInvitationById(@PathVariable Long id) {
-        return invitationService.getInvitationById(id);
+
+    public Long getInvitationById(@PathVariable Long id) {
+        return invitationService.getInvitationById();
+
+
+
+
     }
 
     @PostMapping
@@ -42,22 +52,29 @@ public class InvitationController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> updateInvitation(@PathVariable Long id, @RequestParam @NotBlank(message = "Status is required")
-    @Pattern(
-            regexp = "pending|accepted|declined",
-            message = "Status must be 'pending', 'accepted', or 'declined'"
-    )
-    String status) {
-        System.out.println("id = " + id);
-        System.out.println("status = " + status);
-        invitationService.updateInvitation(id, status);
+    public ResponseEntity<Void> updateInvitation(
+            @PathVariable Long id,
+            @RequestParam @NotBlank(message = "Status is required")
+            @Pattern(regexp = "pending|accepted|declined", message = "Status must be 'pending', 'accepted', or 'declined'")
+            String status) {
+
+        logger.info("Updating invitation id = {}, status = {}", id, status);
+
+        if (!invitationService.updateInvitation(id, status)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteInvitation(@PathVariable Long id) {
-        invitationService.deleteInvitation(id);
+        if (!invitationService.deleteInvitation(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
         return ResponseEntity.noContent().build();
     }
 }
+

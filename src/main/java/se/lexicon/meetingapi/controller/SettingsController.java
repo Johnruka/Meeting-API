@@ -9,7 +9,7 @@ import se.lexicon.meetingapi.service.SettingsService;
 
 @RestController
 @RequestMapping("/api/settings")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class SettingsController {
 
     private final SettingsService settingsService;

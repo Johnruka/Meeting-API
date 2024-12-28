@@ -14,7 +14,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/labels")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class LabelController {
 
     private final LabelService labelService;

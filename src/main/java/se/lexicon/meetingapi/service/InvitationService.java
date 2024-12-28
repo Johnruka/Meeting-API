@@ -8,6 +8,8 @@ import se.lexicon.meetingapi.repository.InvitationRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Service
 public class InvitationService {
 
@@ -50,10 +52,10 @@ public class InvitationService {
                 .collect(Collectors.toList());
     }
 
-    public InvitationDto getInvitationById(Long id) {
-        Invitation invitation = invitationRepository.findById(id)
+    public Long getInvitationById() {
+        Invitation invitation = invitationRepository.findById(getInvitationById())
                 .orElseThrow(() -> new RuntimeException("Invitation not found with ID: " + id));
-        return toDto(invitation);
+        return toDto(invitation).id();
     }
 
     public InvitationDto saveInvitation(InvitationDto dto) {
@@ -62,7 +64,7 @@ public class InvitationService {
         return toDto(savedInvitation);
     }
 
-    public void updateInvitation(Long id, String status) {
+    public boolean updateInvitation(Long id, String status) {
         Invitation invitation = invitationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Invitation not found with ID: " + id));
 
@@ -73,13 +75,15 @@ public class InvitationService {
         invitation.setLocation(invitation.getLocation());
         invitation.setStatus(status);
         invitationRepository.save(invitation);
+        return false;
     }
 
-    public void deleteInvitation(Long id) {
+    public boolean deleteInvitation(Long id) {
         if (!invitationRepository.existsById(id)) {
             throw new RuntimeException("Invitation not found with ID: " + id);
         }
         invitationRepository.deleteById(id);
+        return false;
     }
 
 
