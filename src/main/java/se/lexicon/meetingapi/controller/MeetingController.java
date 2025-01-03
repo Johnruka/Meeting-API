@@ -17,21 +17,14 @@ public class MeetingController {
 
     private final MeetingService meetingService;
 
-
-
-
     public MeetingController(MeetingService meetingService) {
         this.meetingService = meetingService;
-
-
     }
-
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<MeetingDto> getAllMeetings() {
         return meetingService.getAllMeetings();
-
     }
 
     @GetMapping("/{id}")
@@ -40,7 +33,8 @@ public class MeetingController {
         return meetingService.getMeetingById(id);
     }
 
-    @PostMapping("/{id}")
+    // Corrected @PostMapping without the {id} path
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<MeetingDto> createMeeting(@RequestBody MeetingDto dto) {
         MeetingDto savedDto = meetingService.saveMeeting(dto);
@@ -56,16 +50,14 @@ public class MeetingController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> updateMeeting(@PathVariable Long id, @NotBlank(message = "Level is required")
-    @Pattern(
-            regexp = "team|department",
-            message = "Level must be 'team', 'department'"
-    )
-    String level) {
+    public ResponseEntity<Void> updateMeeting(
+            @PathVariable Long id,
+            @NotBlank(message = "Level is required")
+            @Pattern(regexp = "team|department", message = "Level must be 'team' or 'department'")
+            String level) {
         System.out.println("id = " + id);
         System.out.println("level = " + level);
         meetingService.updateMeeting(id, level);
         return ResponseEntity.noContent().build();
-
     }
 }
