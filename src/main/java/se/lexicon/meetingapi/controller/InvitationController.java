@@ -1,14 +1,9 @@
 package se.lexicon.meetingapi.controller;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.lexicon.meetingapi.dto.InvitationDto;
-import se.lexicon.meetingapi.repository.InvitationRepository;
+import se.lexicon.meetingapi.entity.Invitation;
 import se.lexicon.meetingapi.service.InvitationService;
 
 import java.util.List;
@@ -18,63 +13,63 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 public class InvitationController {
 
-    private static final Logger logger = LoggerFactory.getLogger(InvitationController.class);
-
     private final InvitationService invitationService;
-    private final InvitationRepository invitationRepository;
 
-    public InvitationController(InvitationService invitationService, InvitationRepository invitationRepository) {
+    @Autowired
+    public InvitationController(InvitationService invitationService) {
         this.invitationService = invitationService;
-        this.invitationRepository = invitationRepository;
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<InvitationDto> getAllInvitations() {
-        return invitationService.getAllInvitations();
+    public List<Invitation> getAllInvitations() {
+        return invitationService.findAll();
     }
 
-
-    public Long getInvitationById(@PathVariable Long id) {
-        return invitationService.getInvitationById();
-
-
-
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Invitation> getInvitationById(@PathVariable Long id) {
+        return invitationService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<InvitationDto> createInvitation(@RequestBody InvitationDto dto) {
-        InvitationDto savedDto = invitationService.saveInvitation(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedDto);
+    public Invitation createInvitation(@Valid @RequestBody Invitation invitation) {
+        return invitationService.save(invitation);
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> updateInvitation(
-            @PathVariable Long id,
-            @RequestParam @NotBlank(message = "Status is required")
-            @Pattern(regexp = "pending|accepted|declined", message = "Status must be 'pending', 'accepted', or 'declined'")
-            String status) {
+    public ResponseEntity<Invitation> updateInvitation(@PathVariable Long id, @Valid @RequestBody Invitation updatedInvitation) {
+        return invitationService.findById(id)
+                .map(invitation -> {
+                    invitation.setTitle(updatedInvitation.getTitle());
+                    invitation.setDate(updatedInvitation.getDate());
+                    invitation.setStartTime(updatedInvitation.getStartTime());
+                    invitation.setEndTime(updatedInvitation.getEndTime());
+                    invitation.setLocation(updatedInvitation.getLocation());
+                    invitation.setStatus(updatedInvitation.getStatus());
+                    return ResponseEntity.ok(invitationService.save(invitation));
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
-        logger.info("Updating invitation id = {}, status = {}", id, status);
-
-        if (!invitationService.updateInvitation(id, status)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-        return ResponseEntity.noContent().build();
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Invitation> updateInvitationStatus(@PathVariable Long id, @RequestParam String status) {
+        return invitationService.findById(id)
+                .map(invitation -> {
+                    invitation.setStatus(status);
+                    return ResponseEntity.ok(invitationService.save(invitation));
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteInvitation(@PathVariable Long id) {
-        if (!invitationService.deleteInvitation(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if (invitationService.findById(id).isPresent()) {
+            invitationService.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.noContent().build();
     }
 }
 
