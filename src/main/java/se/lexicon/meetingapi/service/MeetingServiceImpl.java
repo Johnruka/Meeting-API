@@ -1,6 +1,6 @@
 package se.lexicon.meetingapi.service;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.lexicon.meetingapi.config.ResourceNotFoundException;
 import se.lexicon.meetingapi.dto.MeetingDto;
@@ -12,10 +12,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+
 public class MeetingServiceImpl implements MeetingService {
 
     private final MeetingRepository meetingRepository;
+
+    @Autowired
+    public MeetingServiceImpl(MeetingRepository meetingRepository) {
+        this.meetingRepository = meetingRepository;
+    }
 
     @Override
     public MeetingDto createMeeting(MeetingDto meetingDto) {
@@ -53,6 +58,7 @@ public class MeetingServiceImpl implements MeetingService {
         Meeting updatedMeeting = meetingRepository.save(existingMeeting);
         return mapToDto(updatedMeeting);
     }
+
 
     @Override
     public void deleteMeeting(Long id) {

@@ -56,7 +56,7 @@ public class LabelController {
     String level) {
         System.out.println("id = " + id);
         System.out.println("level = " + level);
-        meetingService.updateMeeting(id, level);
+
         return ResponseEntity.noContent().build();
 
     }

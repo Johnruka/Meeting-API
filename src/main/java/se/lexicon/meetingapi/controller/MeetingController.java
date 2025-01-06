@@ -1,15 +1,16 @@
 package se.lexicon.meetingapi.controller;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import se.lexicon.meetingapi.dto.MeetingDto;
 import se.lexicon.meetingapi.service.MeetingService;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/api/meetings")
 @CrossOrigin(origins = "http://localhost:5173")
@@ -33,11 +34,9 @@ public class MeetingController {
         return meetingService.getMeetingById(id);
     }
 
-    // Corrected @PostMapping without the {id} path
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<MeetingDto> createMeeting(@RequestBody MeetingDto dto) {
-        MeetingDto savedDto = meetingService.saveMeeting(dto);
+    public ResponseEntity<MeetingDto> createMeeting(@Valid @RequestBody MeetingDto dto) {
+        MeetingDto savedDto = meetingService.saveMeeting(dto); // Utilize saveMeeting for creation
         return ResponseEntity.status(HttpStatus.CREATED).body(savedDto);
     }
 
@@ -49,15 +48,11 @@ public class MeetingController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> updateMeeting(
+    public ResponseEntity<MeetingDto> updateMeeting(
             @PathVariable Long id,
-            @NotBlank(message = "Level is required")
-            @Pattern(regexp = "team|department", message = "Level must be 'team' or 'department'")
-            String level) {
-        System.out.println("id = " + id);
-        System.out.println("level = " + level);
-        meetingService.updateMeeting(id, level);
-        return ResponseEntity.noContent().build();
+            @Valid @RequestBody MeetingDto dto) {
+        MeetingDto updatedDto = meetingService.updateMeeting(id, dto); // Pass entire DTO
+        return ResponseEntity.ok(updatedDto); // Returning updated entity with 200 OK
     }
 }
+
