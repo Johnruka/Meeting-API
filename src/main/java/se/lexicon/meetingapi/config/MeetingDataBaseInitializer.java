@@ -2,7 +2,6 @@ package se.lexicon.meetingapi.config;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
-import se.lexicon.meetingapi.entity.Invitation;
 import se.lexicon.meetingapi.entity.Meeting;
 import se.lexicon.meetingapi.repository.MeetingRepository;
 
