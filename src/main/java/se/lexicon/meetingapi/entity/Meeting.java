@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,9 @@ public class Meeting {
     private String startTime;
     private String endTime;
     private  String location;
+
+    @NotBlank(message = "Level is required")
+    @Pattern(regexp = "team|company|department", message = "Level must be 'team', 'company', or 'department'")
     private String level;
 
     public Meeting(String title, String date, String startTime, String endTime, String location, String level) {

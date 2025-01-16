@@ -13,7 +13,7 @@ import java.time.LocalTime;
 public class InvitationDatabaseInitializer {
 
     @Bean
-    CommandLineRunner initDatabase(InvitationRepository repository) {
+    CommandLineRunner initInvitationDatabase(InvitationRepository repository) { // Renamed method
         return args -> {
             repository.save(new Invitation("Meeting", LocalDate.now(), LocalTime.of(10, 0), LocalTime.of(12, 0), "Office", "pending"));
             repository.save(new Invitation("Conference", LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(17, 0), "Conference Hall", "accepted"));
@@ -21,6 +21,7 @@ public class InvitationDatabaseInitializer {
             repository.save(new Invitation("Conference", LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(17, 0), "Conference Hall", "accepted"));
             repository.save(new Invitation("Meeting", LocalDate.now(), LocalTime.of(10, 0), LocalTime.of(12, 0), "Office", "pending"));
             repository.save(new Invitation("Conference", LocalDate.now().plusDays(1), LocalTime.of(9, 0), LocalTime.of(17, 0), "Conference Hall", "accepted"));
+
         };
     }
 }
